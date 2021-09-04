@@ -5,7 +5,7 @@ LABEL mail="troy@zygd.site"
 
 RUN apt update -y \
     && apt upgrade -y \
-    && apt install git \
+    && apt install git -y \
     && git clone https://github.com/softwarefly/online-markdown.git /tmp/www \
     && cp -r /tmp/www/docs/* /usr/share/nginx/html/ \
     && rm -rf /tmp/www \

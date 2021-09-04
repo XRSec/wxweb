@@ -2,7 +2,7 @@
 
 用于格式化 Markdown，粘贴到微信公众号的工具。
 
-![screenshots](https://raw.githubusercontent.com/softwarefly/online-markdown/master/screenshots/screenshot.png)
+![image-20210904151549621](image-20210904151549621.png)
 
 ## 在线使用地址
 
