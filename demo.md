@@ -1,6 +1,6 @@
 # 微信公众号 Markdown 排版工具
 
-[![Fork](https://img.shields.io/badge/Fork-barretlee-da282a)](https://github.com/barretlee/online-markdown) [![Editor](https://img.shields.io/badge/Editor-softwarefly-da282a)](https://github.com/softwarefly/online-markdown) [![Docker Automated build](https://img.shields.io/docker/automated/xrsec/wxweb?label=Build&logo=docker&style=flat-square)](https://github.com/xrsec)
+[![Fork](https://img.shields.io/badge/Fork-barretlee-da282a)](https://github.com/barretlee/online-markdown) [![Editor](https://img.shields.io/badge/Editor-softwarefly-da282a)](https://github.com/softwarefly/online-markdown) [![Docker Automated Build](https://img.shields.io/docker/automated/xrsec/wxweb?label=Build&logo=docker&style=flat-square)](https://hub.docker.com/r/xrsec/wxweb) [![Docker Build File](https://img.shields.io/badge/Dockerfile-Github-da282a)](https://github.com/XRSec/wxweb)
 
 > 使用微信公众号编辑器有一个十分头疼的问题——粘贴出来的代码，格式错乱，而且特别丑。这个编辑器能够解决这个问题。
 
@@ -65,4 +65,4 @@ public class Test {
 
 [@xrsec](https://github.com/xrsec)
 
-<!-- [1]: https://github.com/xrsec) -->
+[1]: https://github.com/xrsec)
