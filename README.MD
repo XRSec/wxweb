@@ -8,7 +8,7 @@
 
 ## 在线使用地址
 
-<https://md.softwarefly.net>
+<https://wxweb.zygd.site/>
 
 ## Docker 部署
 
