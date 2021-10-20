@@ -13,7 +13,7 @@
 ## Docker 部署
 
 ```bash
-docker run -it -d --restart=always -p 5052:80 --name wxweb wxweb:latest
+docker run -it -d --restart=always -p 5052:80 --name wxweb xrsec/wxweb:latest
 ```
 
 
