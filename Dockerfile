@@ -20,7 +20,7 @@ RUN apt update -y \
     && git clone https://github.com/doocs/md.git /tmp/www \
     && cd /tmp/www \
     && npm i \
-    && npm run build \
+    && npm run build:h5-netlify \
     && cp -r /tmp/www/dist/* /usr/share/nginx/html/ \
     && rm -rf /tmp/www
 
