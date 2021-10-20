@@ -14,9 +14,9 @@ LABEL mail="troy@zygd.site"
 # https://github.com/doocs/md.git
 RUN apt update -y \
     && apt upgrade -y \
+    && curl -fsSL https://deb.nodesource.com/setup_17.x | bash - \
     && apt install git nodejs npm -y \
     && git clone https://github.com/doocs/md.git /tmp/www \
-    && npm install -g npm \
     && cd /tmp/www \
     && npm i \
     && npm run build \
