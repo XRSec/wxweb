@@ -16,6 +16,7 @@ RUN apt update -y \
     && apt upgrade -y \
     && apt install git nodejs npm -y \
     && git clone https://github.com/doocs/md.git /tmp/www \
+    && npm install -g npm \
     && cd /tmp/www \
     && npm i \
     && npm run build \
