@@ -14,7 +14,7 @@ LABEL mail="troy@zygd.site"
 # https://github.com/doocs/md.git
 RUN apt update -y \
     && apt upgrade -y \
-    && apt install git nodejs -y \
+    && apt install git nodejs npm -y \
     && git clone https://github.com/doocs/md.git /tmp/www \
     && cd /tmp/www \
     && npm i \
