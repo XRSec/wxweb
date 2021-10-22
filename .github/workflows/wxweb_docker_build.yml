@@ -1,6 +1,8 @@
 name: wxweb Docker Build
 
-on: push
+on:
+  watch:
+    types: [started]
 
 jobs:
   build_job:
