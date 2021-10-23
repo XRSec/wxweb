@@ -35,6 +35,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            xrsec/wxweb:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/wxweb:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
