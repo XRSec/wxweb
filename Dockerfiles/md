@@ -1,6 +1,7 @@
 FROM nginx:latest
 LABEL maintainer="xrsec"
 LABEL mail="troy@zygd.site"
+LABEL Github="https://github.com/XRSec/wxweb"
 
 # https://github.com/doocs/md.git
 RUN apt update -y \

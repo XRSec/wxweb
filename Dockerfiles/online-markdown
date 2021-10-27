@@ -1,6 +1,7 @@
 FROM nginx:latest
 LABEL maintainer="xrsec"
 LABEL mail="troy@zygd.site"
+LABEL Github="https://github.com/XRSec/wxweb"
 
 # https://github.com/softwarefly/online-markdown.git
 RUN apt update -y \
@@ -11,4 +12,6 @@ RUN apt update -y \
     && rm -rf /tmp/www \
     && rm /usr/share/nginx/html/CNAME
 
-COPY demo.md /usr/share/nginx/html/
+COPY Resources/online-markdown.md /usr/share/nginx/html/demo.md
+
+ENV LANG en_US.utf8
