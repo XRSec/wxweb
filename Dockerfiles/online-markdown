@@ -8,7 +8,8 @@ RUN apt update -y \
     && apt upgrade -y \
     && apt install git -y \
     && rm -rf /usr/share/nginx/html/* \
-    && git clone https://github.com/softwarefly/online-markdown.git /usr/share/nginx/html/ \
+    && git clone https://github.com/softwarefly/online-markdown.git /tmp/online-markdown \
+    && mv /tmp/online-markdown/docs/* /usr/share/nginx/html/ \
     && rm /usr/share/nginx/html/CNAME
 
 COPY Resources/online-markdown.md /usr/share/nginx/html/demo.md
