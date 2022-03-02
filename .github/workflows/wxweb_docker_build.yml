@@ -26,6 +26,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - 
+        name: Log in to the Container registry
+        uses: docker/login-action@v1.10.0
+        with:
+          registry: ghcr.io
+          username: xrsec
+          password: ${{ secrets.TOKEN_GITHUB }}
+      - 
         name: Build and push Docker images
         uses: docker/build-push-action@v2.7.0
         with:
@@ -36,8 +43,10 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/wxweb:md
             ${{ secrets.DOCKERHUB_USERNAME }}/wxweb:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+            ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/wxweb:md
+            ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/wxweb:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/wxweb:md.cache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/wxweb:md.cache,mode=max
 
   online-markdown:
     name: Docker online-markdown Build
@@ -59,15 +68,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - 
+        name: Log in to the Container registry
+        uses: docker/login-action@v1.10.0
+        with:
+          registry: ghcr.io
+          username: xrsec
+          password: ${{ secrets.TOKEN_GITHUB }}
+      - 
         name: Build and push Docker images
         uses: docker/build-push-action@v2.7.0
         with:
           context: .
-          file: Dockerfiles/online-markdown
+          file: Dockerfiles/md
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/wxweb:online-markdown
+            ghcr.io/${{ secrets.DOCKERHUB_USERNAME }}/wxweb:online-markdown
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/wxweb:online-markdown.cache
           cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/wxweb:online-markdown.cache,mode=max
 
