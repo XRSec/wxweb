@@ -1,6 +1,7 @@
 name: Docker wxweb Build
 
 on:
+  workflow_dispatch:
   watch:
     types: [started]
 
