@@ -147,3 +147,7 @@ jobs:
                   "messageUrl": "${{ steps.getDingData.outputs.URL }}"
               }
             }
+      -
+        name: webhook
+        run: |
+          curl -s ${{ SECRETS.WebHock }}
