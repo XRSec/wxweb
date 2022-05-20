@@ -2,6 +2,8 @@ FROM nginx:latest
 LABEL maintainer="xrsec"
 LABEL mail="troy@zygd.site"
 LABEL Github="https://github.com/XRSec/wxweb"
+LABEL org.opencontainers.image.source="https://github.com/XRSec/wxweb"
+LABEL org.opencontainers.image.title="wxweb"
 
 # https://github.com/softwarefly/online-markdown.git
 RUN apt update -y \
