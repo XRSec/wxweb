@@ -6,16 +6,16 @@ LABEL org.opencontainers.image.source="https://github.com/XRSec/wxweb"
 LABEL org.opencontainers.image.title="wxweb"
 
 # https://github.com/doocs/md.git
-RUN apt update -y \
-    && apt upgrade -y \
-    && apt install sudo -y \
+RUN apt-get -qq update \
+    && apt-get -qq upgrade \
+    && apt-get -qq install sudo \
     && curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - \
-    && apt install git nodejs -y \
+    && apt-get -qq install git nodejs \
     && git clone https://github.com/doocs/md.git /tmp/www \
     && cd /tmp/www \
     && npm i \
     && npm run build:h5-netlify \
-    && cp -r /tmp/www/dist/* /usr/share/nginx/html/ \
+    && cp -rf /tmp/www/dist/* /usr/share/nginx/html/ \
     && rm -rf /tmp/www
 
 ENV LANG en_US.utf8

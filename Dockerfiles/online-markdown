@@ -6,9 +6,9 @@ LABEL org.opencontainers.image.source="https://github.com/XRSec/wxweb"
 LABEL org.opencontainers.image.title="wxweb"
 
 # https://github.com/softwarefly/online-markdown.git
-RUN apt update -y \
-    && apt upgrade -y \
-    && apt install git -y \
+RUN apt-get -qq update \
+    && apt-get -qq upgrade \
+    && apt-get -qq install git \
     && rm -rf /usr/share/nginx/html/* \
     && git clone https://github.com/softwarefly/online-markdown.git /tmp/online-markdown \
     && mv /tmp/online-markdown/docs/* /usr/share/nginx/html/ \
