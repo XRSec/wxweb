@@ -1,23 +1,21 @@
-FROM nginx:latest
+FROM nodejs
+ADD md.tar.gz /tmp
+
+# https://github.com/doocs/md.git
+RUN mv /tmp/doocs-md-* /tmp/www \
+    && cd /tmp/www \
+    && npm i \
+    && npm run build:h5-netlify \
+
+FROM nginx
 LABEL maintainer="xrsec"
 LABEL mail="troy@zygd.site"
 LABEL Github="https://github.com/XRSec/wxweb"
 LABEL org.opencontainers.image.source="https://github.com/XRSec/wxweb"
 LABEL org.opencontainers.image.title="wxweb"
 
-ADD md.tar.gz /tmp/www
+RUN rm -rf /usr/share/nginx/html/*
 
-# https://github.com/doocs/md.git
-RUN apt-get -qq update \
-    && apt-get -qq upgrade \
-    && apt-get -qq install sudo \
-    && curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash - \
-    && apt-get -qq install git nodejs \
-    && cd /tmp/www \
-    && ls \
-    && npm i \
-    && npm run build:h5-netlify \
-    && cp -rf /tmp/www/dist/* /usr/share/nginx/html/ \
-    && rm -rf /tmp/www
+COPY --from=0 /tmp/www/dist /usr/share/nginx/html
 
 ENV LANG en_US.utf8

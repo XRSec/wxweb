@@ -1,19 +1,21 @@
-FROM nginx:latest
+FROM debian
+
+# https://github.com/softwarefly/online-markdown.git
+RUN apt-get -qq update \
+    && apt-get -qq upgrade \
+    && apt-get -qq install git \
+    && git clone https://github.com/softwarefly/online-markdown.git /tmp/online-markdown \
+    && rm tmp/online-markdown/docs/CNAME
+
+FROM nginx
 LABEL maintainer="xrsec"
 LABEL mail="troy@zygd.site"
 LABEL Github="https://github.com/XRSec/wxweb"
 LABEL org.opencontainers.image.source="https://github.com/XRSec/wxweb"
 LABEL org.opencontainers.image.title="wxweb"
 
-# https://github.com/softwarefly/online-markdown.git
-RUN apt-get -qq update \
-    && apt-get -qq upgrade \
-    && apt-get -qq install git \
-    && rm -rf /usr/share/nginx/html/* \
-    && git clone https://github.com/softwarefly/online-markdown.git /tmp/online-markdown \
-    && mv /tmp/online-markdown/docs/* /usr/share/nginx/html/ \
-    && rm /usr/share/nginx/html/CNAME
-
+RUN rm -rf /usr/share/nginx/html/*
+COPY --from=0 /tmp/online-markdown /usr/share/nginx/html
 COPY Resources/online-markdown.md /usr/share/nginx/html/demo.md
 
 ENV LANG en_US.utf8
