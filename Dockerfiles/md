@@ -1,4 +1,4 @@
-FROM nodejs
+FROM node
 ADD md.tar.gz /tmp
 
 # https://github.com/doocs/md.git
