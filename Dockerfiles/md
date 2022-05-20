@@ -5,7 +5,7 @@ ADD md.tar.gz /tmp
 RUN mv /tmp/doocs-md-* /tmp/www \
     && cd /tmp/www \
     && npm i \
-    && npm run build:h5-netlify \
+    && npm run build:h5-netlify
 
 FROM nginx
 LABEL maintainer="xrsec"
