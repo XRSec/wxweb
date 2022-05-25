@@ -32,10 +32,10 @@ jobs:
           registry: ghcr.io
           username: xrsec
           password: ${{ secrets.TOKEN_GITHUB }}
-      -
-        name: Wget zip
-        run: |
-          curl -sLm 10 -o md.tar.gz $(jq -r .tarball_url <(curl -sLm 10 https://api.github.com/repos/doocs/md/releases/latest -H "Authorization: token ${{ SECRETS.TOKEN_GITHUB }}"))
+      # -
+      #   name: Wget zip
+      #   run: |
+      #     curl -sLm 10 -o md.tar.gz $(jq -r .tarball_url <(curl -sLm 10 https://api.github.com/repos/doocs/md/releases/latest -H "Authorization: token ${{ SECRETS.TOKEN_GITHUB }}"))
       - 
         name: Build and push Docker images
         uses: docker/build-push-action@v2.7.0
