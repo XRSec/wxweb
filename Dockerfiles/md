@@ -3,8 +3,8 @@ FROM node:16-stretch
 
 # https://github.com/doocs/md.git
 # RUN mv /tmp/doocs-md-* /tmp/www \
-    # && cd /tmp/www \
 RUN git clone https://github.com/doocs/md.git /tmp/www \
+    && cd /tmp/www \
     && npm i \
     && npm run build:h5-netlify
 
