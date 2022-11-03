@@ -10,24 +10,24 @@ jobs:
     name: Docker md Build
     runs-on: ubuntu-latest
     steps:
-      - 
+      -
         name: Private Actions Checkout
-        uses: actions/checkout@v2.3.4
-      - 
+        uses: actions/checkout@v5
+      -
         name: Docker Setup QEMU
-        uses: docker/setup-qemu-action@v1.2.0
-      - 
+        uses: docker/setup-qemu-action@v3.6.0
+      -
         name: Docker Setup Buildx
-        uses: docker/setup-buildx-action@v1.6.0
-      - 
+        uses: docker/setup-buildx-action@v3.11.1
+      -
         name: Docker Login
-        uses: docker/login-action@v1.10.0
+        uses: docker/login-action@v3.5.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - 
+      -
         name: Log in to the Container registry
-        uses: docker/login-action@v1.10.0
+        uses: docker/login-action@v3.5.0
         with:
           registry: ghcr.io
           username: xrsec
@@ -36,9 +36,9 @@ jobs:
       #   name: Wget zip
       #   run: |
       #     curl -sLm 10 -o md.tar.gz $(jq -r .tarball_url <(curl -sLm 10 https://api.github.com/repos/doocs/md/releases/latest -H "Authorization: token ${{ SECRETS.TOKEN_GITHUB }}"))
-      - 
+      -
         name: Build and push Docker images
-        uses: docker/build-push-action@v2.7.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: .
           file: Dockerfiles/md
@@ -56,31 +56,31 @@ jobs:
     name: Docker online-markdown Build
     runs-on: ubuntu-latest
     steps:
-      - 
+      -
         name: Private Actions Checkout
-        uses: actions/checkout@v2.3.4
-      - 
+        uses: actions/checkout@v5
+      -
         name: Docker Setup QEMU
-        uses: docker/setup-qemu-action@v1.2.0
-      - 
+        uses: docker/setup-qemu-action@v3.6.0
+      -
         name: Docker Setup Buildx
-        uses: docker/setup-buildx-action@v1.6.0
-      - 
+        uses: docker/setup-buildx-action@v3.11.1
+      -
         name: Docker Login
-        uses: docker/login-action@v1.10.0
+        uses: docker/login-action@v3.5.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - 
+      -
         name: Log in to the Container registry
-        uses: docker/login-action@v1.10.0
+        uses: docker/login-action@v3.5.0
         with:
           registry: ghcr.io
           username: xrsec
           password: ${{ secrets.TOKEN_GITHUB }}
-      - 
+      -
         name: Build and push Docker images
-        uses: docker/build-push-action@v2.7.0
+        uses: docker/build-push-action@v6.18.0
         with:
           context: .
           file: Dockerfiles/online-markdown
@@ -97,56 +97,22 @@ jobs:
     needs: [md,online-markdown]
     runs-on: ubuntu-latest
     steps:
-      - 
+      -
         name: Private Actions Checkout
-        uses: actions/checkout@v2.3.4
-      - 
+        uses: actions/checkout@v5
+      -
         name: Docker Hub Description
-        uses: peter-evans/dockerhub-description@v2
+        uses: peter-evans/dockerhub-description@v4.0.2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: ${{ secrets.DOCKERHUB_USERNAME }}/wxweb
       -
-        name: Get Data 
-        id: getDingData
-        run: |
-          set -ex
-          # 输出仓库名
-          REPOSITORY="${{GITHUB.REPOSITORY}}"
-          echo "::set-output name=REPOSITORY::${REPOSITORY#*/}"
-          
-          # 获取用户仓库信息
-          # RESPONSE="$(curl -sLm 10 https://api.github.com/repos/${{ GITHUB.REPOSITORY }})"
-          # 建议填写自己的 TOKEN
-          RESPONSE="$(curl -sLm 10 https://api.github.com/repos/${{ GITHUB.REPOSITORY }} -H "Authorization: token ${{ SECRETS.TOKEN_GITHUB }}")"
-          
-          # 获取 用户仓库 设置的 描述，如果为空，可能是没有使用 TOKEN
-          DESCRIPTION="$(jq -r .description <(echo ${RESPONSE}))"
-          echo "::set-output name=DESCRIPTION::${DESCRIPTION}"
-          # 获取 用户仓库 设置的 URL, 如果没有就输出 Github 地址
-          URL="$(jq -r .homepage <(echo ${RESPONSE}))"
-          if [[ "${URL}" == "null" || "${URL}" == "" ]]; then
-            echo "::set-output name=URL::${{ GITHUB.SERVER_URL }}/${{ GITHUB.REPOSITORY }}"
-          else
-            echo "::set-output name=URL::${URL}"
-          fi
-      - 
-        name: Send dingding notify
-        uses: zcong1993/actions-ding@master
+        name: Send notification to Feishu
+        uses: XRSec/feishu-bot-webhook-action@v1
         with:
-          dingToken: ${{ SECRETS.DING_TOKEN }}
-          secret: ${{ SECRETS.DING_SECRET }}
-          body: |
-            {
-              "msgtype": "link",
-              "link": {
-                  "text": "${{ steps.getDingData.outputs.DESCRIPTION }}",
-                  "title":  "${{ steps.getDingData.outputs.REPOSITORY }} WorkFlow ${{ GITHUB.JOB }} Success!",
-                  "picUrl": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
-                  "messageUrl": "${{ steps.getDingData.outputs.URL }}"
-              }
-            }
+          FEISHU_BOT_WEBHOOK: ${{ secrets.FEISHU_BOT_WEBHOOK }}
+          FEISHU_BOT_SIGNKEY: ${{ secrets.FEISHU_BOT_SIGNKEY }}
       -
         name: webhook
         run: |
